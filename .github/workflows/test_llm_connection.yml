@@ -1,0 +1,25 @@
+name: Test Koneksi LLM (Gemini & Groq)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify-llm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repositori
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependensi
+        run: pip install -r requirements.txt
+
+      - name: Jalankan uji koneksi Gemini & Groq
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python utils/llm_client.py
